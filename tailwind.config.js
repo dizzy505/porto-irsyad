@@ -2,9 +2,16 @@
 export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
-    extend: {},
+    extend: {
+      scrollbar: {
+        DEFAULT: {
+          size: '8px',
+          track: 'transparent',
+          thumb: '#4B5563',
+          hover: '#6B7280',
+        },
+      },
+    },
   },
-  plugins: [
-    require('tailwind-scrollbar'),
-  ],
+  plugins: [],
 };
