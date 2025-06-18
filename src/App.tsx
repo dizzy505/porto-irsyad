@@ -829,7 +829,7 @@ function App() {
                     className="bg-gray-800 rounded-lg shadow-sm hover:shadow-lg transition-all hover:-translate-y-2"
                   >
                     <div className="relative">
-                      <div className="overflow-x-auto whitespace-nowrap rounded-t-lg scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-gray-800">
+                      <div className="overflow-x-auto whitespace-nowrap rounded-t-lg">
                         <div className="flex gap-4 w-full p-4">
                           {project.previewImages.map((img, i) => (
                             <div key={i} className="relative flex-shrink-0">
