@@ -347,6 +347,24 @@ function App() {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [currentView, setCurrentView] = useState<View>("profile");
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [imageIndexes, setImageIndexes] = useState<{ [projectId: string]: number }>({});
+
+  const handlePrevImage = (projectId: string, imagesLength: number) => {
+    setImageIndexes((prev) => ({
+      ...prev,
+      [projectId]: prev[projectId] === undefined
+        ? imagesLength - 1
+        : (prev[projectId] - 1 + imagesLength) % imagesLength,
+    }));
+  };
+  const handleNextImage = (projectId: string, imagesLength: number) => {
+    setImageIndexes((prev) => ({
+      ...prev,
+      [projectId]: prev[projectId] === undefined
+        ? 1 % imagesLength
+        : (prev[projectId] + 1) % imagesLength,
+    }));
+  };
 
   const projects: Project[] = [
     {
@@ -851,76 +869,92 @@ function App() {
             >
               <h2 className="text-3xl font-bold mb-8 text-white">Projects</h2>
               <div className="grid grid-cols-1 gap-8">
-                {projects.map((project, index) => (
-                  <motion.div
-                    key={project.id}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: index * 0.1 }}
-                    className="bg-gray-800 rounded-lg shadow-sm hover:shadow-lg transition-all hover:-translate-y-2"
-                  >
-                    <div className="relative">
-                      <div className="overflow-x-auto rounded-t-lg scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-transparent">
-                        <div className="flex gap-3 w-full p-3">
-                          {project.previewImages.map((img, i) => (
-                            <div key={i} className="relative flex-shrink-0 group cursor-pointer">
-                              <img
-                                src={img}
-                                alt={`${project.title} ${i + 1}`}
-                                className="h-56 w-auto object-cover rounded-lg shadow-lg group-hover:scale-105 transition-transform duration-300 border-2 border-gray-700 group-hover:border-blue-400"
-                                onClick={() => setSelectedImage(img)}
-                              />
-                              <div className="absolute bottom-2 right-2 bg-black bg-opacity-60 text-white px-2 py-1 rounded text-xs">
-                                {i + 1}/{project.previewImages.length}
-                              </div>
-                            </div>
+                {projects.map((project, index) => {
+                  const currentImgIdx = imageIndexes[project.id] ?? 0;
+                  const imagesLength = project.previewImages.length;
+                  return (
+                    <motion.div
+                      key={project.id}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: index * 0.1 }}
+                      className="bg-gray-800 rounded-lg shadow-sm hover:shadow-lg transition-all hover:-translate-y-2"
+                    >
+                      <div className="relative flex items-center justify-center h-56 bg-gray-900 rounded-t-lg">
+                        {imagesLength > 1 && (
+                          <button
+                            className="absolute left-2 z-10 bg-gray-700 bg-opacity-70 hover:bg-opacity-100 text-white rounded-full p-2 shadow-lg focus:outline-none"
+                            onClick={() => handlePrevImage(project.id, imagesLength)}
+                            aria-label="Previous image"
+                          >
+                            <svg width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                          </button>
+                        )}
+                        <div className="flex-shrink-0 cursor-pointer">
+                          <img
+                            src={project.previewImages[currentImgIdx]}
+                            alt={`${project.title} ${currentImgIdx + 1}`}
+                            className="h-56 w-auto object-cover rounded-lg shadow-lg border-2 border-gray-700 hover:border-blue-400 transition-all duration-300"
+                            onClick={() => setSelectedImage(project.previewImages[currentImgIdx])}
+                          />
+                          <div className="absolute bottom-2 right-2 bg-black bg-opacity-60 text-white px-2 py-1 rounded text-xs">
+                            {currentImgIdx + 1}/{imagesLength}
+                          </div>
+                        </div>
+                        {imagesLength > 1 && (
+                          <button
+                            className="absolute right-2 z-10 bg-gray-700 bg-opacity-70 hover:bg-opacity-100 text-white rounded-full p-2 shadow-lg focus:outline-none"
+                            onClick={() => handleNextImage(project.id, imagesLength)}
+                            aria-label="Next image"
+                          >
+                            <svg width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                          </button>
+                        )}
+                      </div>
+                      <div className="p-8">
+                        <div className="flex items-center gap-4 mb-6">
+                          {project.icon}
+                          <h3 className="text-2xl font-semibold text-white">
+                            {project.title}
+                          </h3>
+                        </div>
+                        <p className="text-gray-300 mb-6 text-lg leading-relaxed">
+                          {project.description}
+                        </p>
+                        <div className="flex flex-wrap gap-3 mb-8">
+                          {project.tags.map((tag) => (
+                            <span
+                              key={tag}
+                              className="px-4 py-2 bg-gray-700 text-blue-400 rounded-full text-sm"
+                            >
+                              {tag}
+                            </span>
                           ))}
                         </div>
-                      </div>
-                    </div>
-                    <div className="p-8">
-                      <div className="flex items-center gap-4 mb-6">
-                        {project.icon}
-                        <h3 className="text-2xl font-semibold text-white">
-                          {project.title}
-                        </h3>
-                      </div>
-                      <p className="text-gray-300 mb-6 text-lg leading-relaxed">
-                        {project.description}
-                      </p>
-                      <div className="flex flex-wrap gap-3 mb-8">
-                        {project.tags.map((tag) => (
-                          <span
-                            key={tag}
-                            className="px-4 py-2 bg-gray-700 text-blue-400 rounded-full text-sm"
+                        <div className="flex gap-4">
+                          <a
+                            href={project.githubUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex-1 flex items-center justify-center gap-3 px-6 py-3 bg-gray-700 text-white rounded-lg hover:bg-gray-600 transition-colors text-lg"
                           >
-                            {tag}
-                          </span>
-                        ))}
+                            <Github size={24} />
+                            <span>GitHub</span>
+                          </a>
+                          <a
+                            href={project.liveUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex-1 flex items-center justify-center gap-3 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-lg"
+                          >
+                            <ExternalLink size={24} />
+                            <span>Live Demo</span>
+                          </a>
+                        </div>
                       </div>
-                      <div className="flex gap-4">
-                        <a
-                          href={project.githubUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex-1 flex items-center justify-center gap-3 px-6 py-3 bg-gray-700 text-white rounded-lg hover:bg-gray-600 transition-colors text-lg"
-                        >
-                          <Github size={24} />
-                          <span>GitHub</span>
-                        </a>
-                        <a
-                          href={project.liveUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex-1 flex items-center justify-center gap-3 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-lg"
-                        >
-                          <ExternalLink size={24} />
-                          <span>Live Demo</span>
-                        </a>
-                      </div>
-                    </div>
-                  </motion.div>
-                ))}
+                    </motion.div>
+                  );
+                })}
               </div>
             </motion.div>
           )}
