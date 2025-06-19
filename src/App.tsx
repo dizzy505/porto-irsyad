@@ -890,12 +890,13 @@ function App() {
                             <svg width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
                           </button>
                         )}
-                        <div className="flex-shrink-0 cursor-pointer">
+                        <div className="flex-shrink-0 cursor-pointer w-full h-full">
                           <img
                             src={project.previewImages[currentImgIdx]}
                             alt={`${project.title} ${currentImgIdx + 1}`}
-                            className="h-56 w-auto object-cover rounded-lg shadow-lg border-2 border-gray-700 hover:border-blue-400 transition-all duration-300"
+                            className="w-full h-full object-cover rounded-t-lg shadow-lg border-2 border-gray-700 hover:border-blue-400 transition-all duration-300"
                             onClick={() => setSelectedImage(project.previewImages[currentImgIdx])}
+                            style={{ display: 'block' }}
                           />
                           <div className="absolute bottom-2 right-2 bg-black bg-opacity-60 text-white px-2 py-1 rounded text-xs">
                             {currentImgIdx + 1}/{imagesLength}
