@@ -873,14 +873,9 @@ function App() {
                   const currentImgIdx = imageIndexes[project.id] ?? 0;
                   const imagesLength = project.previewImages.length;
                   return (
-                    <motion.div
-                      key={project.id}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: index * 0.1 }}
-                      className="bg-gray-800 rounded-lg shadow-sm hover:shadow-lg transition-all hover:-translate-y-2"
-                    >
-                      <div className="relative flex items-center justify-center bg-gray-900 rounded-t-lg h-72">
+                    <div key={project.id} className="mb-4">
+                      {/* Gambar di atas, terpisah */}
+                      <div className="relative w-full h-72 flex items-center justify-center bg-gray-900 rounded-t-lg">
                         {imagesLength > 1 && (
                           <button
                             className="absolute left-2 z-10 bg-gray-700 bg-opacity-70 hover:bg-opacity-100 text-white rounded-full p-2 shadow-lg focus:outline-none"
@@ -890,17 +885,15 @@ function App() {
                             <svg width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
                           </button>
                         )}
-                        <div className="flex-shrink-0 cursor-pointer w-full h-full">
-                          <img
-                            src={project.previewImages[currentImgIdx]}
-                            alt={`${project.title} ${currentImgIdx + 1}`}
-                            className="w-full h-full object-contain rounded-t-lg shadow-lg border-2 border-gray-700 hover:border-blue-400 transition-all duration-300"
-                            onClick={() => setSelectedImage(project.previewImages[currentImgIdx])}
-                            style={{ display: 'block' }}
-                          />
-                          <div className="absolute bottom-2 right-2 bg-black bg-opacity-60 text-white px-2 py-1 rounded text-xs">
-                            {currentImgIdx + 1}/{imagesLength}
-                          </div>
+                        <img
+                          src={project.previewImages[currentImgIdx]}
+                          alt={`${project.title} ${currentImgIdx + 1}`}
+                          className="w-full h-full object-contain rounded-t-lg shadow-lg border-2 border-gray-700 hover:border-blue-400 transition-all duration-300"
+                          onClick={() => setSelectedImage(project.previewImages[currentImgIdx])}
+                          style={{ display: 'block' }}
+                        />
+                        <div className="absolute bottom-2 right-2 bg-black bg-opacity-60 text-white px-2 py-1 rounded text-xs">
+                          {currentImgIdx + 1}/{imagesLength}
                         </div>
                         {imagesLength > 1 && (
                           <button
@@ -912,7 +905,8 @@ function App() {
                           </button>
                         )}
                       </div>
-                      <div className="p-8">
+                      {/* Card project di bawah */}
+                      <div className="bg-gray-800 rounded-b-lg shadow-sm p-8">
                         <div className="flex items-center gap-4 mb-6">
                           {project.icon}
                           <h3 className="text-2xl font-semibold text-white">
@@ -953,7 +947,7 @@ function App() {
                           </a>
                         </div>
                       </div>
-                    </motion.div>
+                    </div>
                   );
                 })}
               </div>
