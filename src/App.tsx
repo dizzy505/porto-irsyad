@@ -875,7 +875,7 @@ function App() {
                   return (
                     <div key={project.id} className="mb-4">
                       {/* Gambar di atas, terpisah */}
-                      <div className="relative w-full h-72 flex items-center justify-center bg-gray-900 rounded-t-lg">
+                      <div className="relative w-full flex items-center justify-center bg-gray-900 rounded-t-lg">
                         {imagesLength > 1 && (
                           <button
                             className="absolute left-2 z-10 bg-gray-700 bg-opacity-70 hover:bg-opacity-100 text-white rounded-full p-2 shadow-lg focus:outline-none"
@@ -888,7 +888,7 @@ function App() {
                         <img
                           src={project.previewImages[currentImgIdx]}
                           alt={`${project.title} ${currentImgIdx + 1}`}
-                          className="w-full h-full object-contain rounded-t-lg shadow-lg border-2 border-gray-700 hover:border-blue-400 transition-all duration-300"
+                          className="w-full object-contain rounded-t-lg shadow-lg border-2 border-gray-700 hover:border-blue-400 transition-all duration-300"
                           onClick={() => setSelectedImage(project.previewImages[currentImgIdx])}
                           style={{ display: 'block' }}
                         />
