@@ -894,7 +894,7 @@ function App() {
                           <img
                             src={project.previewImages[currentImgIdx]}
                             alt={`${project.title} ${currentImgIdx + 1}`}
-                            className="w-full h-full object-cover rounded-t-lg shadow-lg border-2 border-gray-700 hover:border-blue-400 transition-all duration-300"
+                            className="w-full h-full object-contain rounded-t-lg shadow-lg border-2 border-gray-700 hover:border-blue-400 transition-all duration-300"
                             onClick={() => setSelectedImage(project.previewImages[currentImgIdx])}
                             style={{ display: 'block' }}
                           />
