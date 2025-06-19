@@ -92,7 +92,7 @@ const learningData = [
   },
   {
     topic: "Tableau",
-    progress: 60,
+    progress: 100,
     icon: <BarChart2 size={24} className="text-blue-400" />,
     skills: [
       "Create Visualizations",
@@ -102,7 +102,7 @@ const learningData = [
   },
   {
     topic: "Power BI",
-    progress: 75,
+    progress: 100,
     icon: <LineChart size={24} className="text-blue-400" />,
     skills: [
       "Power Query",
