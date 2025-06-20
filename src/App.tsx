@@ -158,24 +158,16 @@ function ProjectModal({
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="fixed inset-0 bg-black/60 backdrop-blur-md flex items-center justify-center z-50"
+      className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
       onClick={onClose}
     >
       <motion.div
         initial={{ scale: 0.9, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         exit={{ scale: 0.9, opacity: 0 }}
-        className="bg-gray-800/80 backdrop-blur-lg rounded-2xl p-8 max-w-sm w-full mx-4 shadow-2xl relative"
+        className="bg-gray-800 rounded-lg p-6 max-w-sm w-full mx-4"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Close Icon */}
-        <button
-          onClick={onClose}
-          className="absolute top-4 right-4 text-gray-400 hover:text-accent bg-gray-700/60 rounded-full p-2 transition-colors"
-          aria-label="Close"
-        >
-          <X size={20} />
-        </button>
         <h3 className="text-xl font-semibold mb-4 text-white">
           {project.title}
         </h3>
@@ -193,12 +185,18 @@ function ProjectModal({
             href={project.liveUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 w-full p-3 rounded-lg bg-gradient-to-r from-gradientFrom to-gradientTo text-white hover:from-blue-700 hover:to-purple-700 transition-colors"
+            className="flex items-center gap-2 w-full p-3 rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition-colors"
           >
             <ExternalLink size={20} />
             <span>Visit Live Site</span>
           </a>
         </div>
+        <button
+          onClick={onClose}
+          className="mt-4 w-full p-2 border border-gray-600 rounded-lg hover:bg-gray-700 transition-colors text-white"
+        >
+          Close
+        </button>
       </motion.div>
     </motion.div>
   );
@@ -272,28 +270,20 @@ function CertificateModal({
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="fixed inset-0 bg-black/60 backdrop-blur-md flex items-center justify-center z-50"
+      className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
       onClick={onClose}
     >
       <motion.div
         initial={{ scale: 0.9, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         exit={{ scale: 0.9, opacity: 0 }}
-        className="bg-gray-800/80 backdrop-blur-lg rounded-2xl p-8 max-w-2xl w-full mx-4 shadow-2xl relative"
+        className="bg-gray-800 rounded-lg p-6 max-w-2xl w-full mx-4"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Close Icon */}
-        <button
-          onClick={onClose}
-          className="absolute top-4 right-4 text-gray-400 hover:text-accent bg-gray-700/60 rounded-full p-2 transition-colors"
-          aria-label="Close"
-        >
-          <X size={20} />
-        </button>
         <img
           src={certificate.image}
           alt={certificate.title}
-          className="w-full h-auto rounded-xl mb-4 shadow-lg"
+          className="w-full h-auto rounded-lg mb-4"
         />
         <h3 className="text-xl font-semibold mb-2 text-white">
           {certificate.title}
@@ -304,6 +294,12 @@ function CertificateModal({
         {certificate.description && (
           <p className="text-gray-300">{certificate.description}</p>
         )}
+        <button
+          onClick={onClose}
+          className="mt-4 w-full p-2 border border-gray-600 rounded-lg hover:bg-gray-700 transition-colors text-white"
+        >
+          Close
+        </button>
       </motion.div>
     </motion.div>
   );
@@ -317,25 +313,23 @@ function ImageModal({ image, isOpen, onClose }: { image: string | null; isOpen: 
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="fixed inset-0 bg-black/70 backdrop-blur-lg flex items-center justify-center z-[100]"
+      className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-[100]"
       onClick={onClose}
     >
       <motion.div
         initial={{ scale: 0.95, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         exit={{ scale: 0.95, opacity: 0 }}
-        className="bg-gray-800/80 backdrop-blur-lg p-0 max-w-3xl w-full flex flex-col items-center rounded-2xl shadow-2xl relative"
+        className="bg-transparent p-0 max-w-3xl w-full flex flex-col items-center"
         onClick={e => e.stopPropagation()}
       >
-        {/* Close Icon */}
+        <img src={image} alt="Preview" className="rounded-xl max-h-[80vh] w-auto shadow-2xl border-4 border-white" />
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 text-gray-400 hover:text-accent bg-gray-700/60 rounded-full p-2 transition-colors"
-          aria-label="Close"
+          className="mt-6 px-6 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-700 transition-colors shadow-lg"
         >
-          <X size={20} />
+          Close
         </button>
-        <img src={image} alt="Preview" className="rounded-xl max-h-[80vh] w-auto shadow-2xl border-4 border-white mt-8" />
       </motion.div>
     </motion.div>
   );
@@ -467,53 +461,24 @@ function App() {
     <div className="min-h-screen bg-gray-900 md:flex block">
       {/* Sidebar for desktop */}
       <aside className="hidden md:flex flex-col w-80 bg-gray-800 border-r border-gray-700 fixed h-screen overflow-y-auto">
-        {/* Logo/Initials at the top */}
-        <div className="flex items-center justify-center h-20 border-b border-gray-700">
-          <div className="w-12 h-12 rounded-full bg-gradient-to-br from-gradientFrom to-gradientTo flex items-center justify-center text-white text-2xl font-extrabold shadow-lg">
-            IF
-          </div>
-        </div>
         <motion.div
           initial={{ x: -80, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
           className="p-6 border-b border-gray-700"
         >
-          {/* Modern Hero Section */}
-          <div className="relative flex flex-col items-center justify-center mb-6">
-            <div className="w-full h-36 rounded-xl bg-hero-gradient absolute top-0 left-0 z-0 blur-sm opacity-80" />
-            <img
-              src="/images/icad3.jpg"
-              alt="Irsyad Faruq Ardiansyah"
-              className="w-32 h-32 rounded-full mx-auto object-cover border-4 border-accent shadow-xl z-10 mt-8 hover:scale-105 transition-transform duration-300"
-              style={{ position: 'relative' }}
-            />
-            <div className="z-10 mt-4 text-center">
-              <h1 className="text-3xl font-extrabold text-white drop-shadow-lg">Irsyad Faruq Ardiansyah</h1>
-              <motion.p
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2 }}
-                className="text-accent-light text-lg font-semibold mt-2"
-              >
-                Data Enthusiast & Problem Solver
-              </motion.p>
-              <motion.p
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4 }}
-                className="text-gray-400 text-sm mt-1"
-              >
-                "Turning data into actionable insights."
-              </motion.p>
-            </div>
-          </div>
-          {/* Social Links */}
-          <div className="flex justify-center space-x-4 mt-2 z-10">
+          <img
+            src="/images/icad3.jpg"
+            alt="Irsyad Faruq Ardiansyah"
+            className="w-32 h-32 rounded-full mx-auto object-cover border-2 border-blue-400 shadow-lg mb-4 hover:scale-105 transition-transform duration-300"
+          />
+          <h1 className="text-2xl font-bold text-center text-white">
+            Irsyad Faruq Ardiansyah
+          </h1>
+          <div className="flex justify-center space-x-4 mt-4">
             <motion.a
               whileHover={{ scale: 1.2 }}
               href="mailto:irsyad3254@gmail.com"
-              className="text-gray-400 hover:text-accent transition-colors"
-              aria-label="Email"
+              className="text-gray-400 hover:text-blue-400 transition-colors"
             >
               <Mail size={32} />
             </motion.a>
@@ -522,16 +487,14 @@ function App() {
               href="http://linkedin.com/in/IrsyadArdiansyah"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gray-400 hover:text-accent transition-colors"
-              aria-label="LinkedIn"
+              className="text-gray-400 hover:text-blue-400 transition-colors"
             >
               <Linkedin size={32} />
             </motion.a>
             <motion.a
               whileHover={{ scale: 1.2 }}
               href="https://wa.me/6287775439677"
-              className="text-gray-400 hover:text-accent transition-colors"
-              aria-label="WhatsApp"
+              className="text-gray-400 hover:text-blue-400 transition-colors"
             >
               <Phone size={32} />
             </motion.a>
@@ -545,18 +508,14 @@ function App() {
               animate={{ x: 0, opacity: 1 }}
               transition={{ delay: index * 0.1 }}
               onClick={() => setCurrentView(item.id as View)}
-              className={`w-full flex items-center gap-3 px-6 py-4 rounded-lg mb-3 transition-all duration-300 relative group
-                ${currentView === item.id
-                  ? "bg-gradient-to-r from-gradientFrom to-gradientTo text-white scale-105 shadow-lg"
-                  : "text-gray-400 hover:bg-gray-700 hover:text-white"}
-              `}
-              aria-current={currentView === item.id ? 'page' : undefined}
+              className={`w-full flex items-center gap-3 px-6 py-4 rounded-lg mb-3 transition-all duration-300 ${
+                currentView === item.id
+                  ? "bg-blue-600 text-white scale-105"
+                  : "text-gray-400 hover:bg-gray-700 hover:text-white"
+              }`}
             >
-              {/* Animated indicator */}
-              <span className={`absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 rounded-full transition-all duration-300
-                ${currentView === item.id ? 'bg-accent' : 'bg-transparent'}`}></span>
-              <span className="group-hover:scale-110 transition-transform duration-200">{item.icon}</span>
-              <span className="text-lg font-semibold">{item.label}</span>
+              {item.icon}
+              <span className="text-lg">{item.label}</span>
             </motion.button>
           ))}
         </nav>
@@ -568,25 +527,10 @@ function App() {
         <button
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           className="fixed top-4 right-4 z-50 p-2 bg-gray-800 rounded-lg text-white"
-          aria-label={isMobileMenuOpen ? 'Close menu' : 'Open menu'}
         >
           {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
-        {/* Bottom navigation bar for mobile */}
-        <nav className="fixed bottom-0 left-0 right-0 z-40 bg-gray-900/90 backdrop-blur-md border-t border-gray-700 flex justify-around items-center py-2 md:hidden">
-          {menuItems.map((item) => (
-            <button
-              key={item.id}
-              onClick={() => setCurrentView(item.id as View)}
-              className={`flex flex-col items-center justify-center px-2 py-1 rounded-lg transition-all duration-200
-                ${currentView === item.id ? 'text-accent font-bold' : 'text-gray-400 hover:text-accent'}`}
-              aria-label={item.label}
-            >
-              <span className="mb-1">{item.icon}</span>
-              <span className="text-xs">{item.label}</span>
-            </button>
-          ))}
-        </nav>
+
         {/* Profile section for mobile - only show when profile is selected */}
         {currentView === "profile" && (
           <motion.div
@@ -930,46 +874,30 @@ function App() {
                   const imagesLength = project.previewImages.length;
                   return (
                     <div key={project.id} className="mb-4">
-                      {/* Modern Project Card */}
-                      <div className="relative w-full flex items-center justify-center bg-gray-900/80 rounded-t-2xl shadow-2xl backdrop-blur-md overflow-hidden group">
+                      {/* Gambar di atas, terpisah */}
+                      <div className="relative w-full flex items-center justify-center bg-gray-900 rounded-t-lg">
                         {imagesLength > 1 && (
                           <button
-                            className="absolute left-2 z-10 bg-gray-700/70 hover:bg-accent text-white rounded-full p-2 shadow-lg focus:outline-none"
+                            className="absolute left-2 z-10 bg-gray-700 bg-opacity-70 hover:bg-opacity-100 text-white rounded-full p-2 shadow-lg focus:outline-none"
                             onClick={() => handlePrevImage(project.id, imagesLength)}
                             aria-label="Previous image"
                           >
                             <svg width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
                           </button>
                         )}
-                        {/* Image with loading skeleton */}
-                        <motion.div
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: 1 }}
-                          className="relative w-full"
-                        >
-                          <div className={`absolute inset-0 flex items-center justify-center bg-gradient-to-br from-gray-700/40 to-gray-900/60 rounded-t-2xl animate-pulse z-0`} style={{ display: 'none' }} id={`skeleton-${project.id}-${currentImgIdx}`}></div>
-                          <img
-                            src={project.previewImages[currentImgIdx]}
-                            alt={`${project.title} ${currentImgIdx + 1}`}
-                            className="w-full object-contain rounded-t-2xl shadow-lg border-2 border-gray-700 group-hover:border-accent transition-all duration-300 group-hover:scale-105 cursor-pointer z-10"
-                            onClick={() => setSelectedImage(project.previewImages[currentImgIdx])}
-                            style={{ display: 'block' }}
-                            onLoad={() => {
-                              const skeleton = document.getElementById(`skeleton-${project.id}-${currentImgIdx}`);
-                              if (skeleton) skeleton.style.display = 'none';
-                            }}
-                            onError={() => {
-                              const skeleton = document.getElementById(`skeleton-${project.id}-${currentImgIdx}`);
-                              if (skeleton) skeleton.style.display = 'none';
-                            }}
-                          />
-                        </motion.div>
-                        <div className="absolute bottom-2 right-2 bg-black/70 text-white px-2 py-1 rounded text-xs">
+                        <img
+                          src={project.previewImages[currentImgIdx]}
+                          alt={`${project.title} ${currentImgIdx + 1}`}
+                          className="w-full object-contain rounded-t-lg shadow-lg border-2 border-gray-700 hover:border-blue-400 transition-all duration-300"
+                          onClick={() => setSelectedImage(project.previewImages[currentImgIdx])}
+                          style={{ display: 'block' }}
+                        />
+                        <div className="absolute bottom-2 right-2 bg-black bg-opacity-60 text-white px-2 py-1 rounded text-xs">
                           {currentImgIdx + 1}/{imagesLength}
                         </div>
                         {imagesLength > 1 && (
                           <button
-                            className="absolute right-2 z-10 bg-gray-700/70 hover:bg-accent text-white rounded-full p-2 shadow-lg focus:outline-none"
+                            className="absolute right-2 z-10 bg-gray-700 bg-opacity-70 hover:bg-opacity-100 text-white rounded-full p-2 shadow-lg focus:outline-none"
                             onClick={() => handleNextImage(project.id, imagesLength)}
                             aria-label="Next image"
                           >
@@ -978,7 +906,7 @@ function App() {
                         )}
                       </div>
                       {/* Card project di bawah */}
-                      <div className="bg-gray-800/80 backdrop-blur-md rounded-b-2xl shadow-xl p-8">
+                      <div className="bg-gray-800 rounded-b-lg shadow-sm p-8">
                         <div className="flex items-center gap-4 mb-6">
                           {project.icon}
                           <h3 className="text-2xl font-semibold text-white">
@@ -992,35 +920,31 @@ function App() {
                           {project.tags.map((tag) => (
                             <span
                               key={tag}
-                              className="px-4 py-2 bg-gradient-to-r from-gradientFrom to-gradientTo text-white rounded-full text-sm font-semibold shadow"
+                              className="px-4 py-2 bg-gray-700 text-blue-400 rounded-full text-sm"
                             >
                               {tag}
                             </span>
                           ))}
                         </div>
                         <div className="flex gap-4">
-                          <motion.a
+                          <a
                             href={project.githubUrl}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="flex-1 flex items-center justify-center gap-3 px-6 py-3 bg-gray-700 text-white rounded-lg hover:bg-gray-600 transition-colors text-lg"
-                            whileTap={{ scale: 0.95 }}
-                            whileHover={{ scale: 1.05 }}
-                            aria-label={`View ${project.title} on GitHub`}
                           >
                             <Github size={24} />
                             <span>GitHub</span>
-                          </motion.a>
-                          <motion.button
-                            onClick={() => setSelectedProject(project)}
-                            className="flex-1 flex items-center justify-center gap-3 px-6 py-3 bg-gradient-to-r from-gradientFrom to-gradientTo text-white rounded-lg hover:from-blue-700 hover:to-purple-700 transition text-lg shadow-lg"
-                            whileTap={{ scale: 0.95 }}
-                            whileHover={{ scale: 1.05 }}
-                            aria-label={`View details for ${project.title}`}
+                          </a>
+                          <a
+                            href={project.liveUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex-1 flex items-center justify-center gap-3 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-lg"
                           >
                             <ExternalLink size={24} />
-                            <span>View Details</span>
-                          </motion.button>
+                            <span>Live Demo</span>
+                          </a>
                         </div>
                       </div>
                     </div>
